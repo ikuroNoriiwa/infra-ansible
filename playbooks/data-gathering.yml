@@ -1,0 +1,3 @@
+- host: all
+  name: Get Host informations
+  gather_facts: true
