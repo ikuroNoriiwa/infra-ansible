@@ -5,3 +5,7 @@
     - issue
     - motd
 
+- name: Config NTP
+  include_tasks: timezone.yml
+  tags:
+    - ntp
