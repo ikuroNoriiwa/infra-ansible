@@ -10,3 +10,13 @@
     src: issue.net
     dest: /etc/issue
     force: yes
+
+- name: Print banner on ssh
+  lineinfile:
+    dest: /etc/ssh/sshd_config
+    line: Banner /etc/issue.net
+
+- name: Restart ssh service
+  service:
+    name: sshd
+    state: reloaded
