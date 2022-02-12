@@ -1,4 +1,4 @@
-- host: all
+- host: test
   name: Get Host informations
   gather_facts: true
   tasks:
