@@ -5,4 +5,4 @@
 
   roles:
     - role: post_install
-      tags: issue
+      tags: ntp
