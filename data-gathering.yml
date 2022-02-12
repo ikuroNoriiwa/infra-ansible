@@ -1,0 +1,9 @@
+- hosts: all
+  name: Get Host informations
+  gather_facts: true
+  tasks:
+    - name: Test print
+      dnf:
+        name:
+          - wget
+        state: present
