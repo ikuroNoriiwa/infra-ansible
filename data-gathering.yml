@@ -1,6 +1,9 @@
-- name: Hello World Sample
-  hosts: all
+- hosts: all
+  name: Get Host informations
+  gather_facts: true
   tasks:
-    - name: Hello Message
-      debug:
-        msg: "Hello World!"
+    - name: Test print
+      dnf:
+        name:
+          - wget
+        state: present
