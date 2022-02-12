@@ -1,0 +1,7 @@
+---
+- name: issue.net
+  include_tasks: setup_issue.yml
+  tags:
+    - issue
+    - motd
+

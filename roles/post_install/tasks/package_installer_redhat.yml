@@ -1,0 +1,15 @@
+---
+- name: Install Dev packages
+  dnf:
+    name:
+      - make
+      - gcc
+      - git
+      - vim
+      - tree
+      - curl
+      - zip
+    state: latest
+    update_cache: true
+  tags:
+    - Development

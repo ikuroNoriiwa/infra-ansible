@@ -1,0 +1,5 @@
+- name: Setup zsh for user when installed
+  user:
+    name: {{ username }}
+    shell: /bin/zsh
+  when:

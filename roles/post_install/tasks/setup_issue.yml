@@ -1,0 +1,6 @@
+---
+- name: Setup issue.net file
+  copy:
+    src: issue.net
+    dst: /etc/issue.net
+    force: yes
