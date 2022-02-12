@@ -1,0 +1,10 @@
+---
+- name: Set Specific Timezone
+  timezone:
+    name: {{ ntp_default_zone }}/{{ ntp_defautl_city }}
+
+- name: Activate ntp
+  service:
+    name: chronyd
+    state: running
+    enabled: yes
