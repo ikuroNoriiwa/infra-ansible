@@ -3,4 +3,7 @@
   gather_facts: true
   tasks:
     - name: Test print
-      debug: "print message"
+      dnf:
+        name:
+          - wget
+        state: present
