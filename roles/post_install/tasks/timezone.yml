@@ -1,7 +1,7 @@
 ---
 - name: Set Specific Timezone
   timezone:
-    name: {{ ntp_default_zone }}/{{ ntp_defautl_city }}
+    name: "{{ ntp_default_zone }}/{{ ntp_defautl_city }}"
   tags:
     - ntp
 
