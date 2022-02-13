@@ -6,4 +6,4 @@
       getent:
         database: passwd
     - debug:
-        var: ansible_facts.getent_shadow
+        var: ansible_facts.getent_passwd
