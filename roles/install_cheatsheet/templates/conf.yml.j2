@@ -1,0 +1,15 @@
+editor: {{ cheatsheet_editor }}
+colorize: {{ cheatsheet_colorize_bool }}
+style: {{ cheatsheet_style }}
+formatter: {{ cheatsheet_formatter }}
+
+cheatpaths:
+ - name: community
+   path: /usr/share/cheat/cheatsheet/community
+   tags: [ community ]
+   readonly: true
+
+ - name: personal
+   path: ~/.cheat/cheatsheet/personal/
+   tags: [ personal ]
+   readonly: false

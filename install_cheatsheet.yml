@@ -7,37 +7,5 @@
     cheat_version: "4.2.0"
     cheat_type: "cheat-linux-amd64"
 
-  tasks:
-    - name: download Cheatsheet archive
-      get_url:
-        url: "https://github.com/cheat/cheat/releases/download/{{ cheat_version }}/{{ cheat_type }}.gz"
-        dest: "/tmp/{{ cheat_type }}.gz"
-
-    - name: unarchive cheatsheet
-      command: "/usr/bin/gzip -df /tmp/{{ cheat_type }}.gz"
-
-    - name: Move cheat to /usr/bin
-      copy:
-        src: "/tmp/{{ cheat_type }}"
-        remote_src: yes
-        dest: /usr/bin/cheat
-
-    - name: Make cheat readable
-      file:
-        path: /usr/bin/cheat
-        owner: root
-        group: root
-        mode: '0755'
-
-    - name: Remove downloaded file
-      file:
-        path: "/tmp/{{ cheat_type }}.gz"
-        state: absent
-
-    - name: Create cheatsheet conf directory
-      file:
-        path: /etc/cheat
-        state: directory
-        owner: root
-        group: root
-        mode: '0755'
+  roles:
+    - role: install_cheatsheet

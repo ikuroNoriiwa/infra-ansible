@@ -1,0 +1,64 @@
+---
+- name: download Cheatsheet archive
+  get_url:
+    url: "https://github.com/cheat/cheat/releases/download/{{ cheat_version }}/{{ cheat_type }}.gz"
+    dest: "/tmp/{{ cheat_type }}.gz"
+
+- name: unarchive cheatsheet
+  command: "/usr/bin/gzip -df /tmp/{{ cheat_type }}.gz"
+
+- name: Move cheat to /usr/bin
+  copy:
+    src: "/tmp/{{ cheat_type }}"
+    remote_src: yes
+    dest: /usr/bin/cheat
+
+- name: Make cheat readable
+  file:
+    path: /usr/bin/cheat
+    owner: root
+    group: root
+    mode: '0755'
+
+- name: Remove downloaded file
+  file:
+    path: "{{ item }}"
+    state: absent
+  loop:
+    - "/tmp/{{ cheat_type }}.gz"
+    - "/tmp/{{ cheat_type }}"
+
+- name: Create global var
+  lineinfile:
+    state: present
+    path: /etc/profile.d/cheat.sh
+    line: export CHEAT_CONFIG_PATH="/etc/cheat/conf.yml"
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: Create cheatsheet conf directory
+  file:
+    path: /etc/cheat
+    state: directory
+    owner: root
+    group: root
+    mode: '0755'
+
+- name: Write config to dir
+  template:
+    src: files/conf.yml.j2
+    dest: /etc/cheat/conf.yml
+
+- name: Create Community cheatsheet directory
+  file:
+    path: /usr/share/cheat
+    state: directory
+    owner: root
+    group: root
+    mode: '0755'
+
+- name: Clone community cheatsheet
+  git:
+    repo: https://github.com/cheat/cheatsheets
+    dest: /usr/share/cheat

@@ -1,0 +1,4 @@
+cheatsheet_editor: vim
+cheatsheet_colorize_bool: true
+cheatsheet_style: monokai
+cheatsheet_formatter: terminal16m
