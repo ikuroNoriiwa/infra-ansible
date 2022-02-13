@@ -14,10 +14,7 @@
         dest: "/tmp/{{ cheat_type }}.gz"
 
     - name: unarchive cheatsheet
-      unarchive:
-        src: "/tmp/{{ cheat_type }}.gz"
-        remote_src: yes
-        dest: /tmp
+      command: "/usr/bin/gzip -df /tmp/{{ cheat_type }}.gz"
 
     - name: Move cheat to /usr/bin
       copy:
