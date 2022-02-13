@@ -26,10 +26,10 @@
         mode: '0755'
 
     - name: Create cheatsheet conf directory
-        file:
-          path: /etc/cheat
-          state: directory
-          owner: root
-          group: root
-          mode: '0755'
+      file:
+        path: /etc/cheat
+        state: directory
+        owner: root
+        group: root
+        mode: '0755'
 
