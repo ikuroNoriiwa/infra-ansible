@@ -1,6 +1,0 @@
----
-- include_tasks: package_installer_redhat.yml
-  when: ansible_os_family == "RedHat"
-
-- include_tasks: package_installer_debian.yml
-  when: ansible_os_family == "Debian"
