@@ -1,10 +1,4 @@
 ---
-- name: Set Specific Timezone
-  community.general.timezone:
-    name: "{{ ntp_default_zone }}/{{ ntp_defautl_city }}"
-  tags:
-    - ntp
-
 - name: Activate ntp
   service:
     name: chronyd
