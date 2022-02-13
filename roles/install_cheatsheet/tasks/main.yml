@@ -61,4 +61,4 @@
 - name: Clone community cheatsheet
   git:
     repo: https://github.com/cheat/cheatsheets
-    dest: /usr/share/cheat/community
+    dest: /usr/share/cheat/cheatsheet/community
