@@ -25,7 +25,7 @@
   handlers:
     - name: unarchive cheatsheet
       unarchive:
-        src: "/tmp/{{ cheat_type }}.gz"
+        path: "/tmp/{{ cheat_type }}.gz"
         dest: /usr/bin/cheat
       notify: Make cheat readable
 
