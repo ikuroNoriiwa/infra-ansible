@@ -14,25 +14,34 @@
         dest: "/tmp/{{ cheat_type }}.gz"
       notify: unarchive cheatsheet
 
-    - name: Create cheatsheet conf directory
-      file:
-        path: /etc/cheat
-        state: directory
-        owner: root
-        group: root
-        mode: '0755'
-
-  handlers:
     - name: unarchive cheatsheet
       unarchive:
         src: "/tmp/{{ cheat_type }}.gz"
         remote_src: yes
+        dest: /tmp
+
+    - name: Move cheat to /usr/bin
+      copy:
+        src: "/tmp/{{ cheat_type }}"
+        remote_src: yes
         dest: /usr/bin/cheat
-      notify: Make cheat readable
 
     - name: Make cheat readable
       file:
         path: /usr/bin/cheat
+        owner: root
+        group: root
+        mode: '0755'
+
+    - name: Remove downloaded file
+      file:
+        path: "/tmp/{{ cheat_type }}.gz"
+        state: absent
+
+    - name: Create cheatsheet conf directory
+      file:
+        path: /etc/cheat
+        state: directory
         owner: root
         group: root
         mode: '0755'
