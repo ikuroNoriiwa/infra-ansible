@@ -1,6 +1,6 @@
 ---
 - name: Set Specific Timezone
-  timezone:
+  community.general.timezone:
     name: "{{ ntp_default_zone }}/{{ ntp_defautl_city }}"
   tags:
     - ntp
