@@ -26,6 +26,7 @@
     - name: unarchive cheatsheet
       unarchive:
         path: "/tmp/{{ cheat_type }}.gz"
+        remote_src: yes
         dest: /usr/bin/cheat
       notify: Make cheat readable
 
