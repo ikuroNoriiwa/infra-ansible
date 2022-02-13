@@ -47,7 +47,7 @@
 
 - name: Write config to dir
   template:
-    src: files/conf.yml.j2
+    src: templates/conf.yml.j2
     dest: /etc/cheat/conf.yml
 
 - name: Create Community cheatsheet directory
