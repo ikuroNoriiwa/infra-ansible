@@ -12,7 +12,6 @@
       get_url:
         url: "https://github.com/cheat/cheat/releases/download/{{ cheat_version }}/{{ cheat_type }}.gz"
         dest: "/tmp/{{ cheat_type }}.gz"
-      notify: unarchive cheatsheet
 
     - name: unarchive cheatsheet
       unarchive:
