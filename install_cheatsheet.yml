@@ -27,6 +27,9 @@
       unarchive:
         src: "/tmp/{{ cheat_type }}.gz"
         dest: /usr/bin/cheat
+      notify: Make cheat readable
+
+    - name: Make cheat readable
       file:
         path: /usr/bin/cheat
         owner: root
