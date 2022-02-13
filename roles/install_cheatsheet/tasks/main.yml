@@ -30,7 +30,7 @@
 
 - name: Create global var
   lineinfile:
-    state: present
+    create: true
     path: /etc/profile.d/cheat.sh
     line: export CHEAT_CONFIG_PATH="/etc/cheat/conf.yml"
     owner: root
