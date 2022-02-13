@@ -2,8 +2,8 @@
   name: Get Host informations
   gather_facts: true
   tasks:
-    - name: Test print
-      dnf:
-        name:
-          - wget
-        state: present
+    - name: Get list of users
+      getent:
+        database: passwd
+    - debug:
+        var: ansible_facts.getent_shadow
