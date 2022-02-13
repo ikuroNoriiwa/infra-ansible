@@ -1,0 +1,35 @@
+---
+- hosts: all
+  become: true
+  gather_facts: false
+
+  vars:
+    cheat_version: "4.2.0"
+    cheat_type: "cheat-linux-amd64"
+
+  tasks:
+    - name: download Cheatsheet archive
+      get_url:
+        url: "https://github.com/cheat/cheat/releases/download/{{ cheat_version }}/{{ cheat_type }}.gz"
+        dest: "/tmp/{{ cheat_type }}.gz"
+
+    - name: unarchive cheatsheet
+      unarchive:
+        src: "/tmp/{{ cheat_type }}.gz"
+        dest: /usr/bin/cheat
+
+    - name: Make cheatsheet executable
+      file:
+        path: /usr/bin/cheat
+        owner: root
+        group: root
+        mode: '0755'
+
+    - name: Create cheatsheet conf directory
+        file:
+          path: /etc/cheat
+          state: directory
+          owner: root
+          group: root
+          mode: '0755'
+
