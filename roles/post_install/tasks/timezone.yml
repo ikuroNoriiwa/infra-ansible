@@ -2,7 +2,7 @@
 - name: Activate ntp
   service:
     name: chronyd
-    state: running
+    state: started
     enabled: yes
   tags:
     - ntp
