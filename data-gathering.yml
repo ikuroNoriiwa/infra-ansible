@@ -9,6 +9,7 @@
         var: ansible_facts.getent_passwd
 
     - name: Get shadow database
+      become: true
       getent:
         database: shadow
     - debug:
@@ -16,9 +17,9 @@
 
     - name: Get Hosts database
       getent:
-        database: shadow
+        database: hosts
     - debug:
-        var: ansible_facts.getent_host
+        var: ansible_facts.getent_hosts
 
     - name: Get Group database
       getent:
