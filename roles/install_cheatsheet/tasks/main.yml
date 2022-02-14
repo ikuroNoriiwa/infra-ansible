@@ -70,8 +70,8 @@
     owner: root
     group: root
 
-- name: Debug test 
-  debug: "Print : {{ ansible_facts.getent_passwd }}"
+- name: Debug test
+  debug: "Print : {{ ansible_facts }}"
 
 - name: Create users personnal cheatsheets directory
   file:
