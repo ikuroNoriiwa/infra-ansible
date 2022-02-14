@@ -71,7 +71,8 @@
     group: root
 
 - name: Debug test
-  debug: "Print : {{ ansible_facts }}"
+  debug:
+    msg: "Print : {{ ansible_facts }}"
 
 - name: Create users personnal cheatsheets directory
   file:
