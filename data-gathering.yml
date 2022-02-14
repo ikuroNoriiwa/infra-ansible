@@ -29,5 +29,5 @@
 
     - name: Test loop ansible_facts.getent_passwd
       debug:
-        msg: "Print user : {{ item[item][0] }} et uuid : {{ item[item][2] }}"
+        msg: "Print user : {{ item[{{ item }}][0] }} et uuid : {{ item[{{ item }}][2] }}"
       with_items: "{{ ansible_facts.getent_passwd }}"
