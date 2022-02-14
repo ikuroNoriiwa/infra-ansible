@@ -70,13 +70,13 @@
     owner: root
     group: root
 
-- name: Debug test
-  debug:
-    msg: "Print : {{ ansible_facts }}"
+- name: Gcat et passwd database
+  getent:
+    database: passwd
 
 - name: Create users personnal cheatsheets directory
   file:
-    path: "ansible_facts.getent_passwd[item][4]/.config/cheat/cheatsheet/personal"
+    path: "{{ ansible_facts.getent_passwd[item][4] }}/.config/cheat/cheatsheet/personal"
     state: directory
     owner: "{{ item }}"
     group: "{{ item }}"
