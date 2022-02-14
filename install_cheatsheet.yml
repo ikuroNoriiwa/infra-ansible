@@ -6,7 +6,7 @@
     cheat_version: "4.2.0"
     cheat_type: "cheat-linux-amd64"
 
-  tasks:
+  pre_tasks:
     - name: Gcat et passwd database
       getent:
         database: passwd
