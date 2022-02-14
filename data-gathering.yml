@@ -26,3 +26,8 @@
         database: group
     - debug:
         var: ansible_facts.getent_group
+
+    - name: Test loop ansible_facts.getent_passwd
+      debug:
+        msg: "Print item : {{ item }}"
+      with_items: "{{ ansible_facts.getent_passwd }}"
