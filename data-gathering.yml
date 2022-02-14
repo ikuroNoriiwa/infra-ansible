@@ -2,8 +2,26 @@
   name: Get Host informations
   gather_facts: true
   tasks:
-    - name: Get list of users
+    - name: Get passwd database
       getent:
         database: passwd
     - debug:
         var: ansible_facts.getent_passwd
+
+    - name: Get shadow database
+      getent:
+        database: shadow
+    - debug:
+        var: ansible_facts.getent_shadow
+
+    - name: Get Hosts database
+      getent:
+        database: shadow
+    - debug:
+        var: ansible_facts.getent_host
+
+    - name: Get Group database
+      getent:
+        database: group
+    - debug:
+        var: ansible_facts.getent_group
