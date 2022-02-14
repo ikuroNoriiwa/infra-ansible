@@ -73,8 +73,9 @@
 - name: Gcat et passwd database
   getent:
     database: passwd
+- debug:
     var: ansible_facts.getent_passwd
-
+    
 - name: Create users personnal cheatsheets directory
   file:
     path: "{{ ansible_facts.getent_passwd[item][4] }}/.config/cheat/cheatsheet/personal"
