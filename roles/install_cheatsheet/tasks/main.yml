@@ -62,3 +62,20 @@
   git:
     repo: https://github.com/cheat/cheatsheets
     dest: /usr/share/cheat/cheatsheet/community
+
+- name: Create root personnal cheatsheets directory
+  file:
+    path: /root/.config/cheat/cheatsheet/personal
+    state: directory
+    owner: root
+    group: root
+
+- name: Create users personnal cheatsheets directory
+  file:
+    path: "ansible_facts.getent_passwd[item][4]/.config/cheat/cheatsheet/personal"
+    state: directory
+    owner: "{{ item }}"
+    group: "{{ item }}"
+    mode: '0744'
+  when: "(ansible_facts.getent_passwd[item][1] >= 1000) and ('nologin' not in ansible_facts.getent_passwd[item][5] )"
+  with_items: "{{ ansible_facts.getent_passwd }}"
