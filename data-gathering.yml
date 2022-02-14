@@ -32,3 +32,11 @@
         msg: "Print user : {{ item }} et uid : {{ ansible_facts.getent_passwd[item][1] }} et shell : {{ ansible_facts.getent_passwd[item][5] }}  et shell : {{ ansible_facts.getent_passwd[item][4] }}"
       when: "({{ ansible_facts.getent_passwd[item][1] }} >= 1000) and ('nologin' not in ansible_facts.getent_passwd[item][5] )"
       with_items: "{{ ansible_facts.getent_passwd }}"
+
+    - name: Set alla facts
+      set_fact:
+        getent_passwd: ansible_facts.getent_passwd
+        getent_shadow: ansible_facts.getent_shadow
+        getent_hosts: ansible_facts.getent_hosts
+        getent_group: ansible_facts.getent_group
+
