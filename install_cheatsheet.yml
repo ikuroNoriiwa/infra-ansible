@@ -10,7 +10,7 @@
     - name: Gcat et passwd database
       getent:
         database: passwd
-    - debug:
+    - set_fact:
         var: ansible_facts.getent_passwd
 
   roles:
