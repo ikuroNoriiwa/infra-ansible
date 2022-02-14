@@ -70,6 +70,9 @@
     owner: root
     group: root
 
+- name: Debug test 
+  debug: "Print : {{ ansible_facts.getent_passwd }}"
+
 - name: Create users personnal cheatsheets directory
   file:
     path: "ansible_facts.getent_passwd[item][4]/.config/cheat/cheatsheet/personal"
@@ -79,4 +82,3 @@
     mode: '0744'
   when: "(ansible_facts.getent_passwd[item][1] >= 1000) and ('nologin' not in ansible_facts.getent_passwd[item][5] )"
   with_items: "{{ ansible_facts.getent_passwd }}"
-  debug: "Print : {{ ansible_facts.getent_passwd }}"
