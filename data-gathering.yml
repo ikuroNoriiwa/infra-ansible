@@ -2,14 +2,10 @@
   name: Get Host informations
   gather_facts: true
   tasks:
-    - debug:
-        msg: "Ansible host is : {{ ansible_host }} et ansible name : {{ inventory_hostname }} "
-    - name: Test connexion
-      ping:
-
-    - name: Gcat et passwd database
+    - name: Cat et passwd database
       getent:
         database: passwd
+      ignore_errors: true
     - debug:
         var: ansible_facts.getent_passwd
 
@@ -17,18 +13,21 @@
       become: true
       getent:
         database: shadow
+      ignore_errors: true
     - debug:
         var: ansible_facts.getent_shadow
 
     - name: Get Hosts database
       getent:
         database: hosts
+      ignore_errors: true
     - debug:
         var: ansible_facts.getent_hosts
 
     - name: Get Group database
       getent:
         database: group
+      ignore_errors: true
     - debug:
         var: ansible_facts.getent_group
 
