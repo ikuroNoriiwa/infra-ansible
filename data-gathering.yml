@@ -2,6 +2,11 @@
   name: Get Host informations
   gather_facts: true
   tasks:
+    - debug:
+        msg: "Ansible host is : {{ ansible_host }} et ansible name : {{ inventory_hostname }} "
+    - name: Test connexion
+      ping:
+
     - name: Gcat et passwd database
       getent:
         database: passwd
