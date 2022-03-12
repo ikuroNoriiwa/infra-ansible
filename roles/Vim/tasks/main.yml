@@ -1,0 +1,15 @@
+---
+- name: Download PaperColor
+  git:
+    git clone https://github.com/NLKNguyen/papercolor-theme.git ~/.vim/pack/colors/start/papercolor-theme
+    repo: "https://github.com/NLKNguyen/papercolor-theme.git"
+    dst: "{{ ansible_facts.getent_passwd[item][4] } }/.vim/pack/colors/start/papercolor-theme"
+  with_items: "{{ ansible_facts.getent_passwd }}"
+  when: default_color_theme == PaperColor
+
+- name: write user's .vimrc
+  template:
+    src: templates/.vimrc.j2
+    dest: "{{ ansible_facts.getent_passwd[item][4] } }/.vimrc"
+  with_items: "{{ ansible_facts.getent_passwd }}"
+

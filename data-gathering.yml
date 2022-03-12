@@ -37,7 +37,7 @@
       when: "({{ ansible_facts.getent_passwd[item][1] }} >= 1000) and ('nologin' not in ansible_facts.getent_passwd[item][5] )"
       with_items: "{{ ansible_facts.getent_passwd }}"
 
-    - name: Set alla facts
+    - name: Set all facts
       set_fact:
         getent_passwd: ansible_facts.getent_passwd
         getent_shadow: ansible_facts.getent_shadow
