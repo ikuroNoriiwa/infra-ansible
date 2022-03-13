@@ -4,7 +4,7 @@
     repo: "https://github.com/NLKNguyen/papercolor-theme.git"
     dst: "{{ ansible_facts.getent_passwd[item][4] } }/.vim/pack/colors/start/papercolor-theme"
   with_items: "{{ ansible_facts.getent_passwd }}"
-  when: default_color_theme == PaperColor
+  when: default_color_theme == "PaperColor"
 
 - name: write user's .vimrc
   template:
