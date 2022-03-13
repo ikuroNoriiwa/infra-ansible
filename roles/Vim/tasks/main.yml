@@ -17,5 +17,5 @@
     mode: 0644
   when: "({{ ansible_facts.getent_passwd[item][1] }} >= 1000) and ('nologin' not in ansible_facts.getent_passwd[item][5] )"
   with_items: "{{ ansible_facts.getent_passwd }}"
-  
+  become: true
 
