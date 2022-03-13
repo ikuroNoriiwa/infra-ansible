@@ -1,0 +1,28 @@
+---
+- name: Cat et passwd database
+  getent:
+    database: passwd
+  ignore_errors: true
+
+- name: Get shadow database
+  become: true
+  getent:
+    database: shadow
+  ignore_errors: true
+
+- name: Get Hosts database
+  getent:
+    database: hosts
+  ignore_errors: true
+
+- name: Get Group database
+  getent:
+    database: group
+  ignore_errors: true
+
+- name: Set all facts
+  set_fact:
+    getent_passwd: ansible_facts.getent_passwd
+    getent_shadow: ansible_facts.getent_shadow
+    getent_hosts: ansible_facts.getent_hosts
+    getent_group: ansible_facts.getent_group

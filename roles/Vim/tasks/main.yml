@@ -1,9 +1,5 @@
 ---
-- name: Check if git is installed
-  yum:
-    name: git
-    state: present
-  become: true
+- include_tasks: install_package.yml
 
 - name: Download PaperColor
   git:
