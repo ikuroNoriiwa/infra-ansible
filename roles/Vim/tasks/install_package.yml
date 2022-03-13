@@ -1,4 +1,8 @@
 ---
+- name: test
+  debug:
+    var: ansible_facts
+    
 - name: Install git vim for RHEL
   yum:
     name:
