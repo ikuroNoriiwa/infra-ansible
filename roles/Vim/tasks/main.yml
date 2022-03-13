@@ -4,7 +4,7 @@
     repo: "https://github.com/NLKNguyen/papercolor-theme.git"
     dst: "{{ ansible_facts.getent_passwd[item][4] }}/.vim/pack/colors/start/papercolor-theme"
   with_items: "{{ ansible_facts.getent_passwd }}"
-  when: "default_color_theme == 'PaperColor' and ( ansible_facts.getent_passwd[item][1] >= 1000) and ('nologin' not in ansible_facts.getent_passwd[item][5] )"
+  when: "(default_color_theme) == 'PaperColor' and (( ansible_facts.getent_passwd[item][1] >= 1000) and ('nologin' not in ansible_facts.getent_passwd[item][5] ))"
 
 - name: write user's .vimrc
   template:
