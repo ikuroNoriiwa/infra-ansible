@@ -2,8 +2,9 @@
 - name: Download PaperColor
   git:
     repo: "https://github.com/NLKNguyen/papercolor-theme.git"
-    dst: /usr/share/vim/vim80/pack/colors/start/papercolor-theme
+    dest: /usr/share/vim/vim80/pack/colors/start/papercolor-theme
   when: default_color_theme == 'PaperColor'
+
 
 - name: write user's .vimrc
   template:
