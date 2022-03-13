@@ -4,12 +4,13 @@
     name: git
     state: present
   become: true
-  
+
 - name: Download PaperColor
   git:
     repo: "https://github.com/NLKNguyen/papercolor-theme.git"
     dest: /usr/share/vim/vim80/pack/colors/start/papercolor-theme
   when: default_color_theme == 'PaperColor'
+  become: true
 
 
 - name: write user's .vimrc
