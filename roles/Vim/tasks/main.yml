@@ -1,4 +1,9 @@
 ---
+- name: Check if git is installed
+  yum:
+    name: git
+    state: present
+    
 - name: Download PaperColor
   git:
     repo: "https://github.com/NLKNguyen/papercolor-theme.git"
