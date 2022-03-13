@@ -5,7 +5,7 @@
 
   pre_tasks:
     - name: Collect information
-      include: data-gathering.yml
+      include_playbook: data-gathering.yml
 
   roles:
     - role: Vim
