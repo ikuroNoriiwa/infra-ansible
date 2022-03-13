@@ -3,8 +3,6 @@
   name: Setup vim appearance
   gather_facts: false
 
-  - name: Collect information
-    include_playbook: data-gathering.yml
-
   roles:
+    - role: collect_information
     - role: Vim
