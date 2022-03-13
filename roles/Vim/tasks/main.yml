@@ -12,6 +12,9 @@
   template:
     src: templates/.vimrc.j2
     dest: "{{ ansible_facts.getent_passwd[item][4] }}/.vimrc"
+    group: "{{ item }}"
+    owner: "{{ item }}"
+    mode: 0644
   when: "({{ ansible_facts.getent_passwd[item][1] }} >= 1000) and ('nologin' not in ansible_facts.getent_passwd[item][5] )"
   with_items: "{{ ansible_facts.getent_passwd }}"
   
