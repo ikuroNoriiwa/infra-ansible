@@ -3,7 +3,8 @@
   yum:
     name: git
     state: present
-    
+  become: true
+  
 - name: Download PaperColor
   git:
     repo: "https://github.com/NLKNguyen/papercolor-theme.git"
