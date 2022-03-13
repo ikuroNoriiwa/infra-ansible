@@ -23,8 +23,6 @@
   template:
     src: templates/.vimrc.j2
     dest: /root/.vimrc
-    group: root
-    owner: root"
     mode: 0644
   become: true
 
