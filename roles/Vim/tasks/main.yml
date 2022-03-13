@@ -8,7 +8,6 @@
   when: default_color_theme == 'PaperColor'
   become: true
 
-
 - name: write user's .vimrc
   template:
     src: templates/.vimrc.j2
