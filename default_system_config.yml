@@ -1,0 +1,25 @@
+---
+- hosts: localhost
+  become: true
+
+  tasks:
+    - name: Create sysctl file to disble IPv6
+      ansible.builtin.copy:
+        src: 70-disable-ipv6.conf
+        dest: /etc/sysctl.d/70-disable-ipv6.conf
+    - name: Appply systctl file
+      ansible.builtin.shell:
+        cmd: sysctl -p -f /etc/sysctl.d/70-disable-ipv6.conf
+    - name: Remove CloudInit dhcp IPv4
+      ansible.builtin.file:
+        path: /run/network/interfaces.d/ens18
+        state: absent
+    - name: Plan reboot in 1 min
+      ansible.builtin.shell:
+        cmd: sudo shutdown -r +1 \"System Reboot\"
+    - name: Remove CloudInit sudo ALL NOPASSW
+      ansible.builtin.file:
+        path: /etc/sudoers.d/90-cloud-init-users
+        state: absent
+
+
