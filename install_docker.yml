@@ -1,0 +1,55 @@
+---
+- hosts: localhost
+  become: true
+
+  tasks:
+    - name: update repository cache
+      ansible.builtin.apt:
+        update_cache: yes
+
+    - name: get architecture name
+      ansible.builtin.shell: dpkg --print-architecture
+      register: deb_architecture
+
+    - name: Get distribution name
+      ansible.builtin.shell: lsb_release -cs
+      register: deb_release
+
+    - name: Install Prerequisites
+      ansible.builtin.apt:
+        name: "{{ item }}"
+        state: present
+      with_items:
+        - ca-certificates
+        - curl
+        - gnupg
+        - lsb-release
+
+    - name: Add docker gpg key
+      ansible.builtin.get_url:
+        url: https://download.docker.com/linux/debian/gpg
+        dest: /etc/apt/trusted.gpg.d/docker.asc
+        mode: '0644'
+        owner: root
+        group: root
+
+    - name: Add docker repository
+      ansible.builtin.lineinfile:
+        path: /etc/apt/sources.list.d/docker.list
+        line: "deb [arch={{ deb_architecture.stdout }} signed-by=/etc/apt/trusted.gpg.d/docker.asc] https://download.docker.com/linux/debian {{ deb_release.stdout }} stable"
+        owner: root
+        group: root
+        mode: '0644'
+        create: true
+
+    - name: install docker
+      ansible.builtin.apt:
+        name: "{{ item }}"
+        state: present
+        update_cache: true
+      with_items:
+        - docker-ce
+        - docker-ce-cli
+        - containerd.io
+        - docker-buildx-plugin
+        - docker-compose-plugin
