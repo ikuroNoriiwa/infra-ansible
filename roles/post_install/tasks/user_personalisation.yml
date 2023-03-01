@@ -1,5 +1,23 @@
-- name: Setup zsh for user when installed
-  user:
+- name: install defaults app 
+  ansible.builtin.apt: 
+    name: {{ item }}
+  with_items: "{{ default_applications }}"
+  when: ansible_os_family == 'Debian'
+
+- name: Block for RHEL based OS
+  block: 
+    - name: install epel Releases 
+      ansible.builtin.yum: 
+        name: epel-release
+    - name: install defaults app 
+      ansible.builtin.yum: 
+        name: {{ item }}
+      with_items: "{{ default_applications }}"
+  when: ansible_os_family == "RedHat"
+
+- name: Setup {{ default_shell }} for user when installed
+  ansible.builtin.user:
     name: {{ username }}
-    shell: /bin/zsh
-  when:
+    shell: {{ default_shell }}
+
+  

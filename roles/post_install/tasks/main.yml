@@ -9,3 +9,8 @@
   include_tasks: timezone.yml
   tags:
     - ntp
+
+- name: Install personalisation 
+  include_tasks: user_personalisation.yml
+  tags: 
+    - perso

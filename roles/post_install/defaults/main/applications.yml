@@ -1,0 +1,13 @@
+default_applications: 
+  - make
+  - gcc
+  - git
+  - vim
+  - tree
+  - curl
+  - zip
+  - zsh 
+  - htop 
+  - bash-completion
+  - exa
+
