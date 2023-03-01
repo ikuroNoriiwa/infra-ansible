@@ -1,0 +1,14 @@
+---
+# tasks file for role-get-real-user
+- name: getent - parse passwd file 
+  ansible.builtin.getent: 
+    database: passwd
+  register: getent_list 
+
+- name: create ansible fact real_users
+  ansible.builtin.set_fact: 
+    real_users: "{{ getent_passwd|
+                  dict2items |
+                  json_query(filter)}}"
+  vars: 
+    filter: "[? !contains(value,`/bin/false`)&& !contains(value,`/usr/sbin/nologin`)&& !contains(value,`/bin/sync`)]"
