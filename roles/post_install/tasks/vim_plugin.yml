@@ -1,0 +1,38 @@
+- name: Retrieve all users 
+  ansible.builtin.include_role: 
+    name: role-get-real-user
+  tags: 
+    - test
+
+- name: create .vim dir 
+  ansible.builtin.file: 
+    name: "{{ item.value[4] }}/.vim/autoload/"
+    state: directory 
+    owner: "{{ item.key }}"
+    group: "{{ item.key }}"
+    mode: '0755'
+  with_items: "{{ real_users }}"
+  tags: 
+    - test
+
+- name: Retrieve vim plugin manager 
+  ansible.builtin.get_url: 
+    url: https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    dest: "{{ item.value[4] }}/.vim/autoload/plug.vim"
+  tags: 
+    - test
+
+- name: Create file .vimrc for every users 
+  ansible.builtin.get_url: 
+    url: https://raw.githubusercontent.com/ikuroNoriiwa/personal_configurations/master/computer/app/vim/.vimrc
+    dest: "{{ item.value[4] }}/.vimrc"
+  with_items: "{{ real_users }}"
+  tags: 
+    - test
+
+- name: Retrieve vim plugin manager 
+  ansible.builtin.get_url: 
+    url: https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    dest: "{{ item.value[4] }}/.vim/autoload/plug.vim"
+  tags: 
+    - test

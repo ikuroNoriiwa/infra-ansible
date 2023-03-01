@@ -1,6 +1,6 @@
 - name: install defaults app 
   ansible.builtin.apt: 
-    name: {{ item }}
+    name: "{{ item }}"
   with_items: "{{ default_applications }}"
   when: ansible_os_family == 'Debian'
 
@@ -11,13 +11,19 @@
         name: epel-release
     - name: install defaults app 
       ansible.builtin.yum: 
-        name: {{ item }}
+        name: "{{ item }}"
       with_items: "{{ default_applications }}"
   when: ansible_os_family == "RedHat"
 
+- name: Retrieve all users 
+  ansible.builtin.include_role: 
+    name: role-get-real-user
+
 - name: Setup {{ default_shell }} for user when installed
   ansible.builtin.user:
-    name: {{ username }}
-    shell: {{ default_shell }}
+    name: "{{ item.key }}"
+    shell: "{{ default_shell }}"
+  with_items: "{{ real_users }}" 
+  become: true
 
   
