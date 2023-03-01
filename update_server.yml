@@ -1,7 +1,7 @@
 ---
 # https://techviewleo.com/upgrade-reboot-linux-systems-using-ansible/
 - name: Upgrade and Reboot RHEL & Debian family Linux distros
-  hosts: all
+  hosts: k8s
   vars:
     reboot_connect_timeout: 5
     reboot_post_reboot_delay: 15
@@ -15,22 +15,24 @@
       when: ansible_os_family == "RedHat"
 
     # Debian Family upgrade
-    - name: Update repositories cache
-      apt:
-        update_cache: yes
+    - name: Update Block for Debian OS Family
+      block: 
+      - name: Update repositories cache
+        apt:
+          update_cache: yes
+      - name: Update all packages to their latest version
+        apt:
+          name: "*"
+          state: latest
+      - name: Upgrade the OS (apt-get dist-upgrade)
+        apt:
+          upgrade: dist
       when: ansible_os_family == "Debian"
-    - name: Update all packages to their latest version
-      apt:
-        name: "*"
-        state: latest
-      when: ansible_os_family == "Debian"
-    - name: Upgrade the OS (apt-get dist-upgrade)
-      apt:
-        upgrade: dist
-      when: ansible_os_family == "Debian"
+      become: true 
 
     # Reboot after upgrade
     - name: Reboot host
+      become: true
       reboot:
         connect_timeout: "{{ reboot_connect_timeout }}"
         post_reboot_delay: "{{ reboot_post_reboot_delay }}"
