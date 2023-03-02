@@ -1,0 +1,76 @@
+---
+- hosts: localhost
+  become: true
+
+  tasks:
+    - name: update package index
+      ansible.builtin.apt:
+        update_cache: yes
+
+    - name: install requirements
+      ansible.builtin.apt:
+        name:
+          - apt-transport-https
+          - ca-certificates
+          - curl
+        state: present
+
+    - name: Create keyrings directory
+      ansible.builtin.file:
+        name: /etc/apt/keyrings/
+        state: directory
+        mode: '0644'
+        owner: root
+        group: root
+
+    - name: Add kubernetes gpg key
+      ansible.builtin.get_url:
+        url: https://packages.cloud.google.com/apt/doc/apt-key.gpg.asc
+        dest: /etc/apt/trusted.gpg.d/kubernetes-archive-keyring.gpg.asc
+        mode: '0644'
+        owner: root
+        group: root
+
+    - name: Add kubernetes repository
+      ansible.builtin.lineinfile:
+        path: /etc/apt/sources.list.d/kubernetes.list
+        line: "deb [signed-by=/etc/apt/trusted.gpg.d/kubernetes-archive-keyring.gpg.asc] https://apt.kubernetes.io/ kubernetes-xenial main"
+        owner: root
+        group: root
+        mode: '0644'
+        create: true
+
+    - name: update package index
+      ansible.builtin.apt:
+        update_cache: yes
+
+    - name: Install kubelet kubeadm kubectl
+      ansible.builtin.apt:
+        name:
+          - kubelet
+          - kubeadm
+          - kubectl
+        state: present
+
+    - name: remove containerd configuration
+      ansible.builtin.file:
+        name: /etc/containerd/config.toml
+        state: absent
+
+    - name: restart containerd service
+      ansible.builtin.service:
+        name: containerd
+        state: restarted
+
+    - name: Hold kubernetes packages
+      ansible.builtin.dpkg_selections:
+        name: "{{ item }}"
+        selection: hold
+      loop:
+        - kubeadm
+        - kubectl
+        - kubelet
+
+    - name: init kubernetes cluster with kubeadm
+      ansible.builtin.shell:
+        cmd: "kubeadm init"
