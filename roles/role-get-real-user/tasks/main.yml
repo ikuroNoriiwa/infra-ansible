@@ -5,9 +5,10 @@
     database: passwd
   register: getent_list 
 
+
 - name: create ansible fact real_users
   ansible.builtin.set_fact: 
-    real_users: "{{ getent_passwd|
+    real_users: "{{ getent_passwd |
                   dict2items |
                   json_query(filter)}}"
   vars: 
