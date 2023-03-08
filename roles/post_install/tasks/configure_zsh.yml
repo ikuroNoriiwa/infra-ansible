@@ -1,0 +1,40 @@
+- name: Download Oh My Zsh Install script
+  ansible.builtin.get_url: 
+    url: https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh
+    dest: /tmp/install-omzsh.sh
+    mode: '0755'
+
+- name: Install zsh if not installed 
+  ansible.builtin.apt: 
+    name: 
+      - zsh 
+      - x11-xkb-utils
+    state: present
+
+- name: Installation de oh-my-zsh
+  become: false
+  shell:
+    cmd: echo "y" | sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+  tags: ohmyzsh
+
+- name: Setup {{ default_shell }} for user when installed
+  ansible.builtin.user:
+    name: "{{ item.key }}"
+    shell: "/bin/zsh"
+  with_items: "{{ real_users }}" 
+  become: true
+
+- name: Download perso zshrc 
+  ansible.builtin.get_url: 
+    url: https://raw.githubusercontent.com/ikuroNoriiwa/deploy-util/master/computer/shell/zsh/.zshrc
+    dest: "/home/{{ ansible_user }}/.zshrc"
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+
+- name: download perso aliases 
+  ansible.builtin.get_url: 
+    url: https://raw.githubusercontent.com/ikuroNoriiwa/deploy-util/master/computer/aliases/.zsh.aliases
+    dest: "/home/{{ ansible_user }}/.zsh.aliases"
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+

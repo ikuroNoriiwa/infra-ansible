@@ -14,3 +14,15 @@
   include_tasks: user_personalisation.yml
   tags: 
     - perso
+
+- name: install vim plugin
+  include_tasks: vim_plugin.yml
+  tags: 
+    - vim 
+
+- name: Configure ZSH 
+  include_tasks: configure_zsh.yml
+  when: '"zsh" in default_shell'
+  tags: 
+    - zsh 
+    - perso
