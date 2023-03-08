@@ -25,7 +25,7 @@
         dest: /etc/modules-load.d/containerd.conf
     
     - name: Add modules in linux kernel 
-      ansible.general.modprobe: 
+      community.general.modprobe: 
         name: "{{ item }}"
         state: present
         persistent: present
@@ -109,3 +109,9 @@
     - name: init kubernetes cluster with kubeadm
       ansible.builtin.shell:
         cmd: "kubeadm init"
+
+    - name: Get join command 
+      ansible.builtin.shell: 
+        cmd: "kubeadm token create --print-join-command"
+      register: join_command 
+      
