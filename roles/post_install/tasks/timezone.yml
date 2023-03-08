@@ -6,3 +6,7 @@
     enabled: yes
   tags:
     - ntp
+
+- name: Set Timezone 
+  community.general.timezone: 
+    name: "{{ ntp_default_zone }}/{{ ntp_defautl_city }}"
