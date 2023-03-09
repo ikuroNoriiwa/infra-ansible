@@ -1,0 +1,3 @@
+- name: Install docker for debian based servers 
+  include_tasks: debian.yml
+  when: ansible_os_family == "Debian"
