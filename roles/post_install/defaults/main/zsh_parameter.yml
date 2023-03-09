@@ -1,0 +1,7 @@
+default_zsh_plugins: 
+  - git 
+  - terraform
+  - kubectl 
+  - ansible 
+
+default_editor: vim
