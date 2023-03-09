@@ -12,4 +12,4 @@
                   dict2items |
                   json_query(filter)}}"
   vars: 
-    filter: "[? !contains(value,`/bin/false`)&& !contains(value,`/usr/sbin/nologin`)&& !contains(value,`/bin/sync`)]"
+    filter: "[? !contains(value,`/bin/false`)&& !contains(value,`/usr/sbin/nologin`)&& !contains(value,`/bin/sync`) && !contains(key,`nobody`) && value[1].to_number(@) >= `1000` || value[1].to_number(@) == `0`]"
