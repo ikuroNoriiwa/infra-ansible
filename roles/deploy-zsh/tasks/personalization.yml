@@ -4,13 +4,24 @@
     dest: "{{ item.value[4] }}/.zshrc"
     owner: "{{ item.value[1] }}"
     group: "{{ item.value[2] }}"
-    when: "{{ item.key }} != root"
-    with_items: "{{ real_users }}"
+  when: 'item.key | string not in "root"'
+  with_items: "{{ real_users }}"
 
 
 - name: download perso aliases 
   ansible.builtin.get_url: 
     url: https://raw.githubusercontent.com/ikuroNoriiwa/deploy-util/master/computer/aliases/.zsh.aliases
-    dest: "/home/{{ ansible_user }}/.zsh.aliases"
-    owner: "{{ ansible_user }}"
-    group: "{{ ansible_user }}"
+    dest: "{{ item.value[4] }}/.zsh.aliases"
+    owner: "{{ item.value[1] }}"
+    group: "{{ item.value[2] }}"
+  when: 'item.key | string not in "root"'
+  with_items: "{{ real_users }}"
+
+- name: Download multiple aliases file
+  ansible.builtin.get_url: 
+    url: "https://raw.githubusercontent.com/ikuroNoriiwa/deploy-util/master/computer/aliases/{{ item }}"
+    dest: "{{ item.value[4] }}/.zsh.aliases.d/"
+    owner: "{{ item.value[1] }}"
+    group: "{{ item.value[2] }}"
+  when: 'item.key | string not in "root"'
+  with_items: "{{ real_users }}"
