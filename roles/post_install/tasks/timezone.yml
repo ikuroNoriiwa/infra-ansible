@@ -1,10 +1,10 @@
 ---
-- name: Activate ntp
+- name: Activate ntp for RHEL Based
   service:
     name: chronyd
     state: started
     enabled: yes
-  when: ansible_os_family == "Centos"
+  when: ansible_os_family in ["Centos", "RedHat", "Rocky"]
   tags:
     - ntp
   

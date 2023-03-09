@@ -4,12 +4,25 @@
     dest: /tmp/install-omzsh.sh
     mode: '0755'
 
-- name: Install zsh if not installed 
+- name: Install zsh if not installed Debian
   ansible.builtin.apt: 
     name: 
       - zsh 
       - x11-xkb-utils
     state: present
+  when: ansible_os_family == 'Debian'
+
+- name: Install zsh if not installed RHEL based 
+  ansible.builtin.yum: 
+    name: 
+      - zsh 
+    state: present
+  when: ansible_os_family in ["Centos", "RedHat", "Rocky"]
+
+- name: remove Oh My Zsh dir 
+  ansible.builtin.file: 
+    state: absent 
+    path: "/home/{{ ansible_user }}/.oh-my-zsh"
 
 - name: Installation de oh-my-zsh
   become: false
@@ -24,12 +37,20 @@
   with_items: "{{ real_users }}" 
   become: true
 
-- name: Download perso zshrc 
-  ansible.builtin.get_url: 
-    url: https://raw.githubusercontent.com/ikuroNoriiwa/deploy-util/master/computer/shell/zsh/.zshrc
-    dest: "/home/{{ ansible_user }}/.zshrc"
+# - name: Download perso zshrc 
+#   ansible.builtin.get_url: 
+#     url: https://raw.githubusercontent.com/ikuroNoriiwa/deploy-util/master/computer/shell/zsh/.zshrc
+#     dest: "/home/{{ ansible_user }}/.zshrc"
+#     owner: "{{ ansible_user }}"
+#     group: "{{ ansible_user }}"
+- name: create .zshrc
+  ansible.builtin.template: 
+    src: ".zshrc.j2"
+    dest:  "/home/{{ ansible_user }}/.zshrc"
     owner: "{{ ansible_user }}"
     group: "{{ ansible_user }}"
+  tags: 
+    - test
 
 - name: download perso aliases 
   ansible.builtin.get_url: 

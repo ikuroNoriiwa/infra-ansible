@@ -19,6 +19,7 @@
   include_tasks: vim_plugin.yml
   tags: 
     - vim 
+    - perso 
 
 - name: Configure ZSH 
   include_tasks: configure_zsh.yml
