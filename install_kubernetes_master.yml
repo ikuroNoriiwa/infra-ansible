@@ -28,18 +28,37 @@
       community.general.modprobe: 
         name: "{{ item }}"
         state: present
-        persistent: present
+        # persistent: present # Parameter doesn't exist in elder version
       loop: 
         - overlay
         - br_netfilter
 
-    - name: disable IPv6
+    - name: IPv4 configuration
       ansible.builtin.copy: 
         content: | 
           net.bridge.bridge-nf-call-iptables = 1
           net.ipv4.ip_forward = 1
           net.bridge.bridge-nf-call-ip6tables = 1
         dest: /etc/sysctl.d/99-kubernetes-k8s.conf
+        mode: 0644
+        owner: root
+        group: root
+
+    #     - name: Disable IPv6 from grub
+    #         ansible.builtin.lineinfile:
+    #           state: present
+    #           line:
+    # TODO : Remove ipv6 from grub, sysctl doesn't seems to work
+    - name: Disable IPv6 with sysctl
+      ansible.builtin.copy:
+        content: |
+          net.ipv6.conf.all.disable_ipv6 = 1
+          net.ipv6.conf.default.disable_ipv6 = 1
+          net.ipv6.conf.lo.disable_ipv6=1
+        dest: /etc/sysctl.d/70-disable-ipv6.conf
+        mode: 0644
+        owner: root
+        group: root
 
 
     - name: install requirements
@@ -82,9 +101,9 @@
     - name: Install kubelet kubeadm kubectl
       ansible.builtin.apt:
         name:
-          - kubelet
-          - kubeadm
-          - kubectl
+          - kubelet=1.25.6-00
+          - kubeadm=1.25.6-00
+          - kubectl=1.25.6-00
         state: present
 
     - name: remove containerd configuration
